@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e1526">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>七夕 · 给可芯的礼物</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ 全局背景装饰 ============ -->
+<div class="bg-veil" id="bgVeil">
+  <canvas id="stars"></canvas>
+  <div class="moon" id="moon"></div>
+  <div class="clouds" aria-hidden="true">
+    <span class="cloud c1"></span><span class="cloud c2"></span><span class="cloud c3"></span>
+  </div>
+</div>
+
+<!-- ============ 音频（所有歌曲预声明） ============ -->
+<audio id="audLetter" preload="auto" loop></audio>
+<audio id="audBear"   preload="auto" loop></audio>
+<audio id="audPerfume" preload="auto" loop></audio>
+<audio id="audPajama"  preload="auto" loop></audio>
+<audio id="audDress"   preload="auto" loop></audio>
+
+<div id="app">
+
+  <!-- ===== 幕 0 · 开场 ===== -->
+  <section class="stage stage-open active" id="stage-open" data-stage="open">
+    <div class="open-inner">
+      <div class="qixi-badge">
+        <span class="badge-line"></span>
+        <span class="badge-text">七 夕 · 鹊桥相会</span>
+        <span class="badge-line"></span>
+      </div>
+      <h1 class="her-name">可芯</h1>
+      <p class="open-ask">你准备好迎接你的礼物了吗？</p>
+      <button class="btn-ghost" id="btnEnter">我准备好了</button>
+      <p class="open-hint">轻触屏幕 · 有一封信要给你</p>
+    </div>
+    <!-- 红线从天垂落 -->
+    <svg class="red-thread" viewBox="0 0 200 600" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M100,-10 C 60,120 150,240 95,380 C 70,460 130,540 100,620"
+            fill="none" stroke="rgba(196,84,66,0.55)" stroke-width="1.6" stroke-dasharray="4 7"/>
+    </svg>
+    <div class="magpies" aria-hidden="true"><span class="mp mp1">🕊</span><span class="mp mp2">🕊</span><span class="mp mp3">🕊</span></div>
+  </section>
+
+  <!-- ===== 幕 1 · 七夕信 ===== -->
+  <section class="stage" id="stage-letter" data-stage="letter" hidden>
+    <div class="letter-wrap">
+      <div class="letter-envelope" id="letterEnvelope">
+        <div class="env-front">
+          <span class="env-seal">信</span>
+        </div>
+        <p class="env-tip">轻触展开这封信</p>
+      </div>
+      <div class="letter-paper" id="letterPaper" hidden>
+        <div class="paper-scroll-top"></div>
+        <div class="paper-body">
+          <h2 class="letter-title">致 可芯</h2>
+          <div class="letter-text">
+            <p class="dropcap">见字如面。</p>
+            <p>今天是七夕，是牛郎织女在鹊桥上相见的日子。我盯着日历看了很久，忽然发觉，我们竟也像隔着银河的两个人——你在江苏，我在贵州，一千多公里的路，像一条看不见的银河横在我们中间。</p>
+            <p>可奇怪的是，我从来没有觉得你离我远过。</p>
+            <p>我记得你每次吃过饭，都要拍照片给我看，像个小孩子讨夸奖；记得你胃疼时哼哼唧唧的样子，让我又心疼又拿你没办法；记得我们打游戏时你抢我人头的得意声音，记得你半夜发消息说“睡不着”，我在这头陪你聊到天亮。</p>
+            <p>准备这箱礼物的时候，我一直在想：什么样的东西，才配得上你？</p>
+            <p>后来我想明白了——没有东西配得上你。但我还是想把世界上所有温柔、可爱、明亮的东西都搜刮来，一件一件放在你面前，笨拙地告诉你：你看，这些都是我想给你的。</p>
+            <p>遇见你之前，我不信什么缘分。遇见你之后，我开始信鹊桥，信红线，信所有关于相遇的古老传说——因为如果不是命运，我怎么会跨越一千多公里，刚好遇见你。</p>
+            <p class="letter-last">可芯，七夕快乐。愿你年年今日，都在我身边；愿我们不必像牛郎织女一样苦等一年，而是朝朝暮暮，日日相见。</p>
+          </div>
+          <div class="letter-sign">
+            <p class="sign-name">—— 爱你的 煊</p>
+            <p class="sign-date">农历七月初七 · 夜</p>
+          </div>
+        </div>
+        <button class="btn-ink" id="btnToGift">我读完啦，去拆礼物 →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 幕 2 · 拆箱引导 ===== -->
+  <section class="stage" id="stage-guide" data-stage="guide" hidden>
+    <div class="guide-inner">
+      <div class="giftbox-big" aria-hidden="true">
+        <div class="gb-lid"><span class="gb-bow"></span></div>
+        <div class="gb-body"><span class="gb-tag">给 可芯</span></div>
+      </div>
+      <h2 class="guide-title">在拆开礼盒之前……</h2>
+      <p class="guide-text">这里有四件礼物，每一件，都是我亲手挑了很久很久的。<br>它们都不贵重，但每一件都装着我的心意。</p>
+      <div class="guide-note">
+        <span class="note-ico">🕊</span>
+        <p>但是——答应我，<em>不许</em>一口气把整个网站看完再去拆箱哦。<br>那样惊喜就偷偷溜走啦。我们一件一件来，好吗？</p>
+      </div>
+      <button class="btn-ink" id="btnFirstGift">好，我一件一件拆</button>
+    </div>
+  </section>
+
+  <!-- ===== 幕 3 · 礼物一：巴塞罗熊 ===== -->
+  <section class="stage gift-stage" id="stage-g1" data-stage="g1" hidden>
+    <div class="gift-inner">
+      <div class="gift-count">
+        <span class="count-dot"></span> 第一件 · 鹊桥之礼 <span class="count-dot"></span>
+      </div>
+
+      <!-- 礼盒封面 -->
+      <div class="gift-closed" id="g1Closed">
+        <div class="mini-box">
+          <div class="mb-lid"><span class="mb-bow"></span></div>
+          <div class="mb-body"></div>
+        </div>
+        <p class="closed-tip">轻触拆开第一件礼物</p>
+      </div>
+
+      <!-- 礼物内容 -->
+      <div class="gift-content" id="g1Content" hidden>
+        <div class="gift-photo-frame">
+          <img src="assets/photos/bear.jpg" alt="巴塞罗熊" loading="lazy">
+          <span class="frame-tag">Jellycat · Bartholomew Bear</span>
+        </div>
+        <h3 class="gift-name">巴塞罗熊</h3>
+        <p class="gift-quote">“听说它叫 Bartholomew——温柔、勇敢，还有一点点呆。<br>我一眼就觉得，它是替我来抱你的。”</p>
+        <div class="usage-card">
+          <h4 class="usage-title">🐻 它的专属说明书</h4>
+          <ul class="usage-list">
+            <li>抱它的时候，就当在抱我（它没我暖和，但比我毛茸茸）。</li>
+            <li>晚上睡不着，就把它放在枕头边，让它替我守着你。</li>
+            <li>它不怕异地恋——每天替我，对你说“晚安”。</li>
+          </ul>
+        </div>
+        <p class="now-playing">♪ 周杰伦《告白气球》</p>
+        <button class="btn-ink" data-next="g2">拆下一件礼物 →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 幕 4 · 礼物二：圣木香水 ===== -->
+  <section class="stage gift-stage" id="stage-g2" data-stage="g2" hidden>
+    <div class="gift-inner">
+      <div class="gift-count">
+        <span class="count-dot"></span> 第二件 · 星河之礼 <span class="count-dot"></span>
+      </div>
+
+      <div class="gift-closed" id="g2Closed">
+        <div class="mini-box">
+          <div class="mb-lid"><span class="mb-bow"></span></div>
+          <div class="mb-body"></div>
+        </div>
+        <p class="closed-tip">轻触拆开第二件礼物</p>
+      </div>
+
+      <div class="gift-content" id="g2Content" hidden>
+        <div class="gift-photo-frame">
+          <img src="assets/photos/perfume_1.jpg" alt="凯利安圣木香水" loading="lazy">
+          <span class="frame-tag">KILIAN · 圣木 Sacred Wood</span>
+        </div>
+        <h3 class="gift-name">凯利安 · 圣木香水</h3>
+        <p class="gift-quote">“奶檀香，是你最喜欢的味道。<br>它本该叫‘圣木’，可我私心给它改了个名——叫‘你’。”</p>
+        <div class="usage-card">
+          <h4 class="usage-title">🌙 它的专属用法</h4>
+          <ul class="usage-list">
+            <li>出门前喷一点在手腕与耳后——<em>官方指定用途：迷倒我</em>。</li>
+            <li>想我的时候喷一下，就当是我在你身边。</li>
+            <li>下次见面，我会第一时间闻到它——那是你给我的暗号。</li>
+          </ul>
+        </div>
+        <p class="now-playing">♪ 方大同《月亮代表我的心》</p>
+        <button class="btn-ink" data-next="g3">拆下一件礼物 →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 幕 5 · 礼物三：水豚噜噜睡衣 ===== -->
+  <section class="stage gift-stage" id="stage-g3" data-stage="g3" hidden>
+    <div class="gift-inner">
+      <div class="gift-count">
+        <span class="count-dot"></span> 第三件 · 软语之礼 <span class="count-dot"></span>
+      </div>
+
+      <div class="gift-closed" id="g3Closed">
+        <div class="mini-box">
+          <div class="mb-lid"><span class="mb-bow"></span></div>
+          <div class="mb-body"></div>
+        </div>
+        <p class="closed-tip">轻触拆开第三件礼物</p>
+      </div>
+
+      <div class="gift-content" id="g3Content" hidden>
+        <div class="gift-photo-frame">
+          <img src="assets/photos/pajama.jpg" alt="水豚噜噜睡衣" loading="lazy">
+          <span class="frame-tag">言仓 · 水豚噜噜联名睡衣</span>
+        </div>
+        <h3 class="gift-name">水豚噜噜 · 睡衣</h3>
+        <p class="gift-quote">“噜噜是全世界情绪最稳定的水豚。<br>你穿上它，就把所有烦恼都交给它好了。”</p>
+        <div class="usage-card">
+          <h4 class="usage-title">🦫 噜噜的使用守则</h4>
+          <ul class="usage-list">
+            <li>穿上它，你就是全天下最软乎乎的小朋友。</li>
+            <li>噜噜负责替你挡住所有不开心，你只管好好睡觉。</li>
+            <li>重要：不许穿着它饿肚子——噜噜会心疼，我更会。</li>
+          </ul>
+        </div>
+        <p class="now-playing">♪ 萤火虫儿歌《萌萌噜噜》</p>
+        <button class="btn-ink" data-next="g4">拆下一件礼物 →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 幕 6 · 礼物四：裙子 ===== -->
+  <section class="stage gift-stage" id="stage-g4" data-stage="g4" hidden>
+    <div class="gift-inner">
+      <div class="gift-count">
+        <span class="count-dot"></span> 第四件 · 日常之礼 <span class="count-dot"></span>
+      </div>
+
+      <div class="gift-closed" id="g4Closed">
+        <div class="mini-box">
+          <div class="mb-lid"><span class="mb-bow"></span></div>
+          <div class="mb-body"></div>
+        </div>
+        <p class="closed-tip">轻触拆开最后一件礼物</p>
+      </div>
+
+      <div class="gift-content" id="g4Content" hidden>
+        <div class="gift-photo-frame">
+          <img src="assets/photos/dress.jpg" alt="藏青上衣与白裙" loading="lazy">
+          <span class="frame-tag">藏青 T 恤 · 白色高腰半身裙</span>
+        </div>
+        <h3 class="gift-name">藏青与白 · 夏日裙装</h3>
+        <p class="gift-quote">“藏青色是你的底色，白色是你的干净。<br>我挑了很久，最后觉得：它写的就是你。”</p>
+        <div class="usage-card">
+          <h4 class="usage-title">👗 它的穿衣契约</h4>
+          <ul class="usage-list">
+            <li>锁骨留白、正肩剪裁，穿上很好看——但你要穿着舒服才算数。</li>
+            <li>高腰半身裙配藏青上衣，日常又清爽，像你一样不费力地好看。</li>
+            <li>最重要的一条：见面那天，穿给我看，好吗？</li>
+          </ul>
+        </div>
+        <p class="now-playing">♪ 方大同《每天每天》</p>
+        <button class="btn-ink" id="btnToFinal">我拆完啦 →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 幕 7 · 结尾 ===== -->
+  <section class="stage stage-final" id="stage-final" data-stage="final" hidden>
+    <div class="final-inner">
+      <div class="final-moon" aria-hidden="true"></div>
+      <div class="final-bridge" aria-hidden="true">
+        <span class="bird b1">🕊</span><span class="bird b2">🕊</span><span class="bird b3">🕊</span><span class="bird b4">🕊</span>
+      </div>
+      <h2 class="final-title">七夕快乐<br><span class="final-her">我的可芯</span></h2>
+      <p class="final-text">愿鹊桥常架，愿我们永远不必隔着银河相望。<br>愿每一个七夕，我都能亲手把礼物放在你手心。</p>
+      <p class="final-poem">“金风玉露一相逢，便胜却人间无数。”</p>
+      <p class="final-love">我爱你，不止七夕，更在朝朝暮暮。</p>
+      <p class="final-sign">—— 煊</p>
+      <div class="lanterns" aria-hidden="true">
+        <span class="lantern l1"></span><span class="lantern l2"></span><span class="lantern l3"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 花瓣层 -->
+  <div class="petals" id="petals" aria-hidden="true"></div>
+
+  <!-- 顶部返回小按钮（在信之后才显示） -->
+  <button class="btn-back" id="btnBack" hidden aria-label="返回上一页">‹</button>
+</div>
+
+<!-- 拆开礼物的动效层 -->
+<div class="burst" id="burst" aria-hidden="true"></div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
