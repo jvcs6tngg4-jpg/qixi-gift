@@ -65,6 +65,8 @@ function onEnter(name){
       stopAllMusic();
       break;
     case "letter":
+      // 音乐直接响起，无需再按
+      playTrack("letter");
       preloadTrack("bear");
       preloadTrack("perfume");
       break;
@@ -267,7 +269,6 @@ function init(){
     setTimeout(function(){
       env.hidden = true;
       paper.hidden = false;
-      playTrack("letter");
     }, 500);
   });
 
@@ -276,6 +277,20 @@ function init(){
 
   // 引导 → 第一件礼物
   $("#btnFirstGift").addEventListener("click", function(){ goTo("g1"); });
+
+  // 礼物照片缩略图切换
+  [["g1Thumbs","g1Img"],["g2Thumbs","g2Img"]].forEach(function(pair){
+    var row = document.getElementById(pair[0]);
+    var img = document.getElementById(pair[1]);
+    if(!row || !img) return;
+    row.querySelectorAll(".thumb").forEach(function(t){
+      t.addEventListener("click", function(){
+        row.querySelectorAll(".thumb").forEach(function(x){x.classList.remove("on")});
+        t.classList.add("on");
+        img.src = t.getAttribute("data-full");
+      });
+    });
+  });
 
   // 四件礼物拆开
   bindOpenGift("g1","bear");

@@ -95,6 +95,7 @@ window.ASSETS_BASE = "https://cdn.jsdelivr.net/gh/jvcs6tngg4-jpg/qixi-gift@9a3bc
       </div>
       <h2 class="guide-title">在拆开礼盒之前……</h2>
       <p class="guide-text">这里有四件礼物，每一件，都是我亲手挑了很久很久的。<br>它们都不贵重，但每一件都装着我的心意。</p>
+      <p class="guide-ready">准备好了吗？<br>在拆开礼盒之前，请先接受我的心意。</p>
       <div class="guide-note">
         <span class="note-ico">🕊</span>
         <p>但是——答应我，<em>不许</em>一口气把整个网站看完再去拆箱哦。<br>那样惊喜就偷偷溜走啦。我们一件一件来，好吗？</p>
@@ -122,8 +123,13 @@ window.ASSETS_BASE = "https://cdn.jsdelivr.net/gh/jvcs6tngg4-jpg/qixi-gift@9a3bc
       <!-- 礼物内容 -->
       <div class="gift-content" id="g1Content" hidden>
         <div class="gift-photo-frame">
-          <img src="assets/photos/bear.jpg" alt="巴塞罗熊" loading="lazy">
+          <img src="assets/photos/bear.jpg" alt="巴塞罗熊" loading="lazy" id="g1Img">
           <span class="frame-tag">Jellycat · Bartholomew Bear</span>
+        </div>
+        <div class="thumb-row" id="g1Thumbs">
+          <img src="assets/photos/bear.jpg" data-full="assets/photos/bear.jpg" alt="熊" class="thumb on">
+          <img src="assets/photos/bear_box.jpg" data-full="assets/photos/bear_box.jpg" alt="礼盒" class="thumb">
+          <img src="assets/photos/bear_detail.jpg" data-full="assets/photos/bear_detail.jpg" alt="细节" class="thumb">
         </div>
         <h3 class="gift-name">巴塞罗熊</h3>
         <p class="gift-quote">“听说它叫 Bartholomew——温柔、勇敢，还有一点点呆。<br>我一眼就觉得，它是替我来抱你的。”</p>
@@ -158,8 +164,13 @@ window.ASSETS_BASE = "https://cdn.jsdelivr.net/gh/jvcs6tngg4-jpg/qixi-gift@9a3bc
 
       <div class="gift-content" id="g2Content" hidden>
         <div class="gift-photo-frame">
-          <img src="assets/photos/perfume_1.jpg" alt="凯利安圣木香水" loading="lazy">
+          <img src="assets/photos/perfume_1.jpg" alt="凯利安圣木香水" loading="lazy" id="g2Img">
           <span class="frame-tag">KILIAN · 圣木 Sacred Wood</span>
+        </div>
+        <div class="thumb-row" id="g2Thumbs">
+          <img src="assets/photos/perfume_1.jpg" data-full="assets/photos/perfume_1.jpg" alt="香水" class="thumb on">
+          <img src="assets/photos/perfume_2.jpg" data-full="assets/photos/perfume_2.jpg" alt="香水细节" class="thumb">
+          <img src="assets/photos/perfume_3.jpg" data-full="assets/photos/perfume_3.jpg" alt="香水夜色" class="thumb">
         </div>
         <h3 class="gift-name">凯利安 · 圣木香水</h3>
         <p class="gift-quote">“奶檀香，是你最喜欢的味道。<br>它本该叫‘圣木’，可我私心给它改了个名——叫‘你’。”</p>

@@ -336,6 +336,21 @@ body{
 }
 .btn-back:hover,.btn-back:active{background:rgba(247,241,227,.2)}
 
+
+/* ---------- 缩略图切换 ---------- */
+.thumb-row{display:flex;justify-content:center;gap:10px;margin-top:14px}
+.thumb{
+  width:66px;height:66px;object-fit:cover;border-radius:10px;cursor:pointer;
+  border:2px solid transparent;opacity:.75;transition:all .3s ease;
+}
+.thumb.on{border-color:var(--gold);opacity:1;box-shadow:0 0 14px rgba(201,162,75,.45)}
+.thumb:active{transform:scale(.94)}
+/* ---------- 引导就绪 ---------- */
+.guide-ready{
+  margin-top:26px;color:var(--gold);font-family:var(--font-title);
+  font-size:17px;line-height:1.9;letter-spacing:.12em;
+}
+
 /* ---------- 拆箱动效 ---------- */
 .burst{position:fixed;inset:0;pointer-events:none;z-index:6;overflow:hidden}
 .burst i{
