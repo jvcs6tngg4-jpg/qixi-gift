@@ -65,7 +65,8 @@ function onEnter(name){
       stopAllMusic();
       break;
     case "letter":
-      // 信未展开前不播音乐，展开后再播
+      preloadTrack("bear");
+      preloadTrack("perfume");
       break;
     case "g1": case "g2": case "g3": case "g4": {
       // 如果礼物已经拆开过（返回时），恢复音乐
@@ -86,6 +87,20 @@ function onEnter(name){
       spawnPetals(22, true);
       break;
   }
+}
+
+
+/* ---------- 预加载（逐幕预载下一首，避免首屏下载全部音乐） ---------- */
+function preloadTrack(key){
+  var t = TRACKS[key];
+  if(!t) return;
+  var a = document.getElementById(t.id);
+  if(!a || a.dataset.loading) return;
+  a.dataset.loading = "1";
+  a.preload = "auto";
+  a.src = asset(t.file);
+  a.dataset.src = asset(t.file);
+  a.load();
 }
 
 /* ---------- 音乐控制 ---------- */
@@ -222,6 +237,9 @@ function bindOpenGift(stageKey, trackKey){
       closed.hidden = true;
       content.hidden = false;
       playTrack(trackKey);
+      // 预载下一首，保证切换秒播
+      var nextMap = {bear:"perfume", perfume:"pajama", pajama:"dress", dress:null};
+      if(nextMap[trackKey]) preloadTrack(nextMap[trackKey]);
       // 内容出现后滚动到顶部
       window.scrollTo({top:0, behavior:"smooth"});
     }, 420);
@@ -282,11 +300,9 @@ function init(){
   // 返回
   $("#btnBack").addEventListener("click", goBack);
 
-  // 预加载全部音乐（部署后由 CDN 提供，预加载让切换更顺）
-  Object.keys(TRACKS).forEach(function(k){
-    var a = document.getElementById(TRACKS[k].id);
-    if(a){ a.preload = "auto"; a.src = asset(TRACKS[k].file); a.dataset.src = asset(TRACKS[k].file); }
-  });
+  // 预加载：先载开头信与第一首礼物歌，其余逐幕预载
+  preloadTrack("letter");
+  preloadTrack("bear");
 
   // 开场先放一点花瓣
   setTimeout(function(){ spawnPetals(8, true); }, 1200);
