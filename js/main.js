@@ -322,11 +322,69 @@ function bindOpenGift(stageKey, trackKey, theme){
   });
 }
 
+
+/* ---------- 木盒滑动开盒 ---------- */
+function initWoodenBox(){
+  var box = $("#woodenBox");
+  var knob = $("#claspKnob");
+  var track = box ? box.querySelector(".clasp-track") : null;
+  var tip = $("#boxTip");
+  if(!box || !knob || !track) return;
+
+  var dragging = false, startX = 0, startKnobX = 0, knobX = 0, trackW = 0;
+  function trackWidth(){ return track.getBoundingClientRect().width; }
+  function setKnob(dx){
+    trackW = trackWidth();
+    knobX = Math.max(0, Math.min(dx, trackW));
+    knob.style.transform = "translateX(" + knobX + "px)";
+  }
+  function openBox(){
+    if(box.classList.contains("opened")) return;
+    box.classList.add("opened");
+    trackW = trackWidth();
+    knob.style.transform = "translateX(" + trackW + "px)";
+    if(tip) tip.style.opacity = 0;
+    spawnPetals(14, "pink");
+    var paper = $("#letterPaper");
+    setTimeout(function(){
+      if(box) box.style.display = "none";
+      if(paper){ paper.hidden = false; window.scrollTo({top:0, behavior:"smooth"}); }
+    }, 1150);
+  }
+
+  knob.addEventListener("pointerdown", function(e){
+    dragging = true;
+    startX = e.clientX;
+    startKnobX = knobX;
+    if(knob.setPointerCapture) knob.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  knob.addEventListener("pointermove", function(e){
+    if(!dragging) return;
+    setKnob(e.clientX - startX + startKnobX);
+    e.preventDefault();
+  });
+  var endDrag = function(e){
+    if(!dragging) return;
+    dragging = false;
+    trackW = trackWidth();
+    if(knobX >= trackW * 0.55){
+      setKnob(trackW);
+      openBox();
+    } else {
+      knobX = 0;
+      knob.style.transform = "translateX(0)";
+    }
+  };
+  knob.addEventListener("pointerup", endDrag);
+  knob.addEventListener("pointercancel", endDrag);
+}
+
 /* ---------- 全局点击涟漪 ---------- */
 function initRipples(){
   document.addEventListener("click", function(ev){
     var target = ev.target;
-    if(target && target.closest && target.closest(".btn-seal, .thumb, .gift-closed, .letter-envelope")){
+    if(target && target.closest && target.closest(".btn-seal, .thumb, .gift-closed, .clasp-knob")){
       ripple(ev.clientX, ev.clientY);
     }
   });
@@ -342,16 +400,8 @@ function init(){
 
   $("#btnEnter").addEventListener("click", function(){ goTo("letter"); });
 
-  $("#letterEnvelope").addEventListener("click", function(){
-    var env = $("#letterEnvelope");
-    var paper = $("#letterPaper");
-    env.classList.add("opened");
-    spawnPetals(12, "pink");
-    setTimeout(function(){
-      env.hidden = true;
-      paper.hidden = false;
-    }, 560);
-  });
+  // 木盒：滑动红扣开盒
+  initWoodenBox();
 
   $("#btnToGift").addEventListener("click", function(){ goTo("guide"); });
   $("#btnFirstGift").addEventListener("click", function(){ goTo("g1"); });

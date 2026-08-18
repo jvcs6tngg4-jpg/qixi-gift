@@ -61,33 +61,48 @@
     </div>
   </section>
 
-  <!-- ============ 幕 1 · 七夕情书（竖排） ============ -->
+  <!-- ============ 幕 1 · 木盒情书 ============ -->
   <section class="stage" id="stage-letter" hidden>
     <div class="letter-scene">
-      <div class="letter-envelope" id="letterEnvelope">
-        <div class="env-paper">
-          <span class="env-rect"></span>
-          <span class="env-seal">信</span>
+      <!-- 木盒子（象征礼盒，滑动红扣开盒） -->
+      <div class="wooden-box" id="woodenBox">
+        <div class="wb-lid" id="wbLid">
+          <div class="wb-grain" aria-hidden="true"></div>
+          <div class="wb-brand">煊 · 礼</div>
+          <div class="wb-clasp" id="wbClasp" aria-hidden="true">
+            <span class="clasp-track"></span>
+            <span class="clasp-knob" id="claspKnob"></span>
+          </div>
         </div>
-        <p class="env-tip">轻触展开这封信</p>
+        <div class="wb-body">
+          <div class="wb-grain" aria-hidden="true"></div>
+          <span class="wb-label">给 可芯</span>
+        </div>
+        <div class="wb-light" id="wbLight" aria-hidden="true"></div>
       </div>
+      <p class="env-tip" id="boxTip">轻触红扣 · 向右滑开木盒</p>
 
+      <!-- 盒中信纸 -->
       <div class="scroll" id="letterPaper" hidden>
         <div class="scroll-rod top"></div>
         <div class="paper">
           <div class="huiwen" aria-hidden="true"></div>
           <div class="paper-inner">
-            <div class="letter-seal">煊</div>
+            <div class="letter-seal" aria-hidden="true">煊</div>
             <div class="letter-head">致 可芯</div>
             <div class="letter-body" id="letterBody">
               <p>见字如面。</p>
-              <p>今天是七夕，是牛郎织女在鹊桥上相见的日子。我盯着日历看了很久，忽然发觉，我们竟也像隔着银河的两个人——你在江苏，我在贵州，一千多公里的路，像一条看不见的银河横在我们中间。</p>
+              <p>今天是七夕，牛郎织女在鹊桥上相见的日子。我盯着日历看了很久，忽然发觉，我们竟也像隔着银河的两个人。</p>
+              <p>你在江苏，我在贵州。一千多公里的路，像一条看不见的银河，横在我们中间。</p>
               <p>可奇怪的是，我从来没有觉得你离我远过。</p>
-              <p>我记得你每次吃过饭，都要拍照片给我看，像个小孩子讨夸奖；记得你胃疼时哼哼唧唧的样子，让我又心疼又拿你没办法；记得我们打游戏时你抢我人头的得意声音，记得你半夜发消息说“睡不着”，我在这头陪你聊到天亮。</p>
+              <p>我记得你每次吃过饭，都要拍照片给我看，像个小孩子讨夸奖；记得你胃疼时哼哼唧唧的样子，让我又心疼又拿你没办法。</p>
+              <p>记得我们打游戏时你抢我人头的得意声音，记得你半夜发消息说“睡不着”，我在这头陪你聊到天亮。</p>
               <p>准备这箱礼物的时候，我一直在想：什么样的东西，才配得上你？</p>
-              <p>后来我想明白了——没有东西配得上你。但我还是想把世界上所有温柔、可爱、明亮的东西都搜刮来，一件一件放在你面前，笨拙地告诉你：你看，这些都是我想给你的。</p>
-              <p>遇见你之前，我不信什么缘分。遇见你之后，我开始信鹊桥，信红线，信所有关于相遇的古老传说——因为如果不是命运，我怎么会跨越一千多公里，刚好遇见你。</p>
-              <p>可芯，七夕快乐。愿你年年今日，都在我身边；愿我们不必像牛郎织女一样苦等一年，而是朝朝暮暮，日日相见。</p>
+              <p>后来我想明白了——没有东西配得上你。但我还是想把世界上所有温柔、可爱、明亮的东西都搜刮来，一件一件放在你面前。</p>
+              <p>笨拙地告诉你：你看，这些都是我想给你的。</p>
+              <p>遇见你之前，我不信什么缘分。遇见你之后，我开始信鹊桥，信红线，信所有关于相遇的古老传说。</p>
+              <p>因为如果不是命运，我怎么会跨越一千多公里，刚好遇见你。</p>
+              <p>老婆，七夕快乐。愿你年年今日，都在我身边；愿我们不必像牛郎织女一样苦等一年，而是朝朝暮暮，日日相见。</p>
             </div>
             <div class="letter-sign">
               <p>—— 爱你的 煊</p>
@@ -155,7 +170,6 @@
         <div class="thumb-row" id="g1Thumbs">
           <img src="assets/photos/bear.jpg" data-full="assets/photos/bear.jpg" alt="熊" class="thumb on">
           <img src="assets/photos/bear_box.jpg" data-full="assets/photos/bear_box.jpg" alt="礼盒" class="thumb">
-          <img src="assets/photos/bear_detail.jpg" data-full="assets/photos/bear_detail.jpg" alt="细节" class="thumb">
         </div>
         <p class="gift-quote">“听说它叫 Bartholomew——温柔、勇敢，还有一点点呆。<br>我一眼就觉得，它是替我来抱你的。”</p>
         <div class="usage-card">
