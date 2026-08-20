@@ -12,7 +12,7 @@ function asset(p){ return ASSETS_BASE + p; }
 
 /* ---------- 离线预加载资源清单 ---------- */
 var OFFLINE_CACHE = "qixi-gift-v3";
-var OFFLINE_LOCAL = ["css/style.css", "js/main.js"];
+var OFFLINE_LOCAL = ["css/style.css", "js/main.js", "patterns/baoxianghua.svg", "patterns/chanzhilian.svg"];
 var OFFLINE_REMOTE = [
   "photos/bear.jpg", "photos/bear_box.jpg",
   "photos/perfume_1.jpg", "photos/perfume_2.jpg", "photos/perfume_3.jpg",
@@ -22,7 +22,7 @@ var OFFLINE_REMOTE = [
 ];
 /* 各资源近似字节数（用于进度估算，避免读 blob 占内存） */
 var OFFLINE_BYTES = {
-  "css/style.css": 29000, "js/main.js": 16000,
+  "css/style.css": 29000, "js/main.js": 16000, "patterns/baoxianghua.svg": 2040, "patterns/chanzhilian.svg": 1773,
   "photos/bear.jpg": 172530, "photos/bear_box.jpg": 194221,
   "photos/perfume_1.jpg": 309277, "photos/perfume_2.jpg": 144991,
   "photos/perfume_3.jpg": 134879, "photos/pajama.jpg": 125881,
