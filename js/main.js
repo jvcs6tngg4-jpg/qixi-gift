@@ -144,25 +144,20 @@ function onEnter(name){
       setupTrack("perfume");
       break;
     case "guide":
-      stopMusic(); break;
-    case "guide":
+      // 过渡页继续放《关于爱的定义》，直到点进第一件礼物才停
+      playTrack("letter");
       preloadImg("photos/bear.jpg");
       preloadImg("photos/bear_box.jpg");
-      preloadImg("photos/bear_detail.jpg");
-      break;
-    case "g1":
-      preloadImg("photos/perfume_1.jpg");
-      preloadImg("photos/perfume_2.jpg");
-      preloadImg("photos/perfume_3.jpg");
-      break;
-    case "g2":
-      preloadImg("photos/pajama.jpg");
-      break;
-    case "g3":
-      preloadImg("photos/dress.jpg");
       break;
     case "g1": case "g2": case "g3": case "g4": {
       var map = {g1:"bear",g2:"perfume",g3:"pajama",g4:"dress"};
+      var preloads = {
+        g1:["photos/perfume_1.jpg","photos/perfume_2.jpg","photos/perfume_3.jpg"],
+        g2:["photos/pajama.jpg"],
+        g3:["photos/dress.jpg"],
+        g4:[]
+      }[name] || [];
+      preloads.forEach(function(pp){ preloadImg(pp); });
       var content = $("#" + name + "Content");
       if(content && !content.hidden){
         playTrack(map[name]);
