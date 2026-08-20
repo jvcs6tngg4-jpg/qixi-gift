@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" fill="none">
+  <!-- 祥云纹 · 故宫如意云 -->
+  <path d="M20,70 C18,52 30,40 44,44 C48,28 66,22 76,34 C86,22 104,24 110,38 C126,34 136,46 132,58 C146,58 154,68 146,76 C136,84 30,84 20,70 Z" fill="rgba(201,162,75,.10)" stroke="#c9a24b" stroke-width="1.6"/>
+  <path d="M44,44 C44,58 48,66 54,70" stroke="#c9a24b" stroke-width="1.1" opacity=".7"/>
+  <path d="M76,34 C76,48 80,56 86,60" stroke="#c9a24b" stroke-width="1.1" opacity=".7"/>
+  <path d="M110,38 C110,52 114,60 120,64" stroke="#c9a24b" stroke-width="1.1" opacity=".7"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none">
+  <!-- 团扇 · 七夕秋夜轻罗小扇 -->
+  <circle cx="90" cy="88" r="68" fill="rgba(201,162,75,.06)" stroke="#c9a24b" stroke-width="2"/>
+  <circle cx="90" cy="88" r="58" stroke="#c9a24b" stroke-width="1" opacity=".6"/>
+  <!-- 扇面装饰：月与云 -->
+  <circle cx="90" cy="76" r="16" fill="rgba(243,224,166,.5)" stroke="#e8cf9a" stroke-width="1.2"/>
+  <path d="M58,104 C70,98 80,100 90,104 C100,108 112,108 122,104" stroke="#c9a24b" stroke-width="1.2" opacity=".7"/>
+  <!-- 扇柄 -->
+  <path d="M90,156 L90,178" stroke="#8a652c" stroke-width="3"/>
+  <circle cx="90" cy="178" r="3" fill="#8a652c"/>
+</svg>

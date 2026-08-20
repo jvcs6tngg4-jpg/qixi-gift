@@ -12,7 +12,7 @@ function asset(p){ return ASSETS_BASE + p; }
 
 /* ---------- 离线预加载资源清单 ---------- */
 var OFFLINE_CACHE = "qixi-gift-v3";
-var OFFLINE_LOCAL = ["css/style.css", "js/main.js", "patterns/baoxianghua.svg", "patterns/chanzhilian.svg"];
+var OFFLINE_LOCAL = ["css/style.css", "js/main.js", "patterns/baoxianghua.svg", "patterns/chanzhilian.svg", "patterns/rendong.svg", "patterns/haishuijiangya.svg", "patterns/tongxinjie.svg", "patterns/xiangnang.svg", "patterns/tuanshan.svg", "patterns/xiangyun.svg"];
 var OFFLINE_REMOTE = [
   "photos/bear.jpg", "photos/bear_box.jpg",
   "photos/perfume_1.jpg", "photos/perfume_2.jpg", "photos/perfume_3.jpg",
@@ -22,7 +22,7 @@ var OFFLINE_REMOTE = [
 ];
 /* 各资源近似字节数（用于进度估算，避免读 blob 占内存） */
 var OFFLINE_BYTES = {
-  "css/style.css": 29000, "js/main.js": 16000, "patterns/baoxianghua.svg": 2040, "patterns/chanzhilian.svg": 1773,
+  "css/style.css": 29000, "js/main.js": 16000, "patterns/baoxianghua.svg": 2040, "patterns/chanzhilian.svg": 1773, "patterns/rendong.svg": 999, "patterns/haishuijiangya.svg": 1390, "patterns/tongxinjie.svg": 1206, "patterns/xiangnang.svg": 691, "patterns/tuanshan.svg": 1077, "patterns/xiangyun.svg": 603,
   "photos/bear.jpg": 172530, "photos/bear_box.jpg": 194221,
   "photos/perfume_1.jpg": 309277, "photos/perfume_2.jpg": 144991,
   "photos/perfume_3.jpg": 134879, "photos/pajama.jpg": 125881,
@@ -218,6 +218,20 @@ function initStars(){
   function makeStars(){
     stars = [];
     var n = window.innerWidth < 480 ? 70 : 110;
+    // 银河：一条斜贯的密集星带
+    var river = window.innerWidth < 480 ? 60 : 110;
+    for(var ri=0; ri<river; ri++){
+      var t = ri/river;
+      stars.push({
+        x: W*(0.1 + t*0.8) + (Math.random()*20-10),
+        y: H*(0.75 - t*0.55) + (Math.random()*24-12),
+        r: Math.random()*1.2+.3,
+        a: Math.random()*.55+.25,
+        tw: Math.random()*.02+.005,
+        ph: Math.random()*Math.PI*2,
+        big: Math.random()>.9
+      });
+    }
     for(var i=0;i<n;i++){
       stars.push({
         x:Math.random()*W, y:Math.random()*H*0.85,
@@ -313,6 +327,23 @@ function spark(x, y, color, n){
     sp.style.animation = "sparkFly " + (0.5 + Math.random()*0.5) + "s ease-out forwards";
     document.body.appendChild(sp);
     setTimeout(function(){ sp.remove(); }, 1100);
+  }
+}
+
+/* ---------- 流萤（萤火虫） ---------- */
+function spawnFireflies(){
+  var n = window.innerWidth < 480 ? 12 : 18;
+  for(var i=0;i<n;i++){
+    var f = document.createElement("span");
+    f.className = "firefly";
+    var sz = 3 + Math.random()*4;
+    f.style.width = sz + "px";
+    f.style.height = sz + "px";
+    f.style.left = Math.random()*100 + "vw";
+    f.style.top = (15 + Math.random()*75) + "vh";
+    f.style.animationDuration = (7 + Math.random()*9) + "s";
+    f.style.animationDelay = (Math.random()*7) + "s";
+    document.body.appendChild(f);
   }
 }
 
@@ -527,6 +558,7 @@ function init(){
   initStars();
   initRipples();
   initImgFade();
+  spawnFireflies();
 
   $("#btnEnter").addEventListener("click", function(){ goTo("letter"); });
 
