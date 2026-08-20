@@ -34,8 +34,25 @@
 
 <div id="app">
 
+  <!-- ============ 下载引导页（首次离线预加载） ============ -->
+  <section class="stage stage-download active" id="stage-download">
+    <div class="dl-inner">
+      <div class="dl-orbit" aria-hidden="true"><span class="dl-star"></span></div>
+      <div class="dl-badge">七 夕 · 礼物加载</div>
+      <h2 class="dl-title">正在为你准备礼物…</h2>
+      <div class="dl-progress">
+        <div class="dl-bar"><span id="dlBar"></span></div>
+        <p class="dl-percent"><span id="dlPercent">0</span>%</p>
+      </div>
+      <p class="dl-tip" id="dlTip">正在把心意一件件装进盒子…</p>
+      <p class="dl-size" id="dlSize"></p>
+      <button class="btn-seal dl-enter" id="dlEnter" hidden><span>礼物已备好 · 轻触开启</span></button>
+      <p class="dl-hint">首次打开会下载全部内容，之后即可离线秒开</p>
+    </div>
+  </section>
+
   <!-- ============ 幕 0 · 开场 ============ -->
-  <section class="stage stage-open active" id="stage-open">
+  <section class="stage stage-open" id="stage-open">
     <svg class="magpies-svg" viewBox="0 0 1440 300" preserveAspectRatio="none" aria-hidden="true">
       <g class="magpie m1">
         <path d="M0,40 C18,22 34,26 40,36 C46,26 62,22 78,34 C70,20 52,8 30,12 C12,15 2,28 0,40 Z" fill="#2b3040"/>
@@ -164,7 +181,7 @@
           <p class="gift-sub">Jellycat · Bartholomew Bear</p>
         </div>
         <div class="gift-photo-frame">
-          <img src="assets/photos/bear.jpg" alt="巴塞罗熊" id="g1Img" class="gift-img" loading="lazy">
+          <img src="assets/photos/bear.jpg" alt="巴塞罗熊" id="g1Img" class="gift-img" loading="lazy"><span class="pf pf-tl"></span><span class="pf pf-tr"></span><span class="pf pf-bl"></span><span class="pf pf-br"></span>
           <div class="gift-glint"></div>
         </div>
         <div class="thumb-row" id="g1Thumbs">
@@ -208,7 +225,7 @@
           <p class="gift-sub">KILIAN · Sacred Wood</p>
         </div>
         <div class="gift-photo-frame">
-          <img src="assets/photos/perfume_1.jpg" alt="凯利安圣木香水" id="g2Img" class="gift-img" loading="lazy">
+          <img src="assets/photos/perfume_1.jpg" alt="凯利安圣木香水" id="g2Img" class="gift-img" loading="lazy"><span class="pf pf-tl"></span><span class="pf pf-tr"></span><span class="pf pf-bl"></span><span class="pf pf-br"></span>
           <div class="scent-mist" aria-hidden="true"></div>
         </div>
         <div class="thumb-row" id="g2Thumbs">
@@ -253,7 +270,7 @@
           <p class="gift-sub">言仓 × 噜噜 联名</p>
         </div>
         <div class="gift-photo-frame">
-          <img src="assets/photos/pajama.jpg" alt="水豚噜噜睡衣" class="gift-img" loading="lazy">
+          <img src="assets/photos/pajama.jpg" alt="水豚噜噜睡衣" class="gift-img" loading="lazy"><span class="pf pf-tl"></span><span class="pf pf-tr"></span><span class="pf pf-bl"></span><span class="pf pf-br"></span>
           <div class="pajama-stars" aria-hidden="true">✦ ✧ ✦</div>
         </div>
         <p class="gift-quote">“噜噜是全世界情绪最稳定的水豚。<br>你穿上它，就把所有烦恼都交给它好了。”</p>
@@ -293,7 +310,7 @@
           <p class="gift-sub">藏青 T 恤 · 白色高腰半身裙</p>
         </div>
         <div class="gift-photo-frame">
-          <img src="assets/photos/dress.jpg" alt="藏青上衣与白裙" class="gift-img" loading="lazy">
+          <img src="assets/photos/dress.jpg" alt="藏青上衣与白裙" class="gift-img" loading="lazy"><span class="pf pf-tl"></span><span class="pf pf-tr"></span><span class="pf pf-bl"></span><span class="pf pf-br"></span>
           <div class="dress-moon" aria-hidden="true"></div>
         </div>
         <p class="gift-quote">“藏青色是你的底色，白色是你的干净。<br>我挑了很久，最后觉得：它写的就是你。”</p>

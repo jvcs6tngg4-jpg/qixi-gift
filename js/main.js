@@ -10,6 +10,44 @@ var LOCAL_BASE  = "assets/";
 
 function asset(p){ return ASSETS_BASE + p; }
 
+/* ---------- 离线预加载资源清单 ---------- */
+var OFFLINE_CACHE = "qixi-gift-v3";
+var OFFLINE_LOCAL = ["css/style.css", "js/main.js"];
+var OFFLINE_REMOTE = [
+  "photos/bear.jpg", "photos/bear_box.jpg",
+  "photos/perfume_1.jpg", "photos/perfume_2.jpg", "photos/perfume_3.jpg",
+  "photos/pajama.jpg", "photos/dress.jpg",
+  "music/qixi_letter.m4a", "music/bear.m4a", "music/perfume.m4a",
+  "music/pajama.m4a", "music/dress.m4a"
+];
+/* 各资源近似字节数（用于进度估算，避免读 blob 占内存） */
+var OFFLINE_BYTES = {
+  "css/style.css": 29000, "js/main.js": 16000,
+  "photos/bear.jpg": 172530, "photos/bear_box.jpg": 194221,
+  "photos/perfume_1.jpg": 309277, "photos/perfume_2.jpg": 144991,
+  "photos/perfume_3.jpg": 134879, "photos/pajama.jpg": 125881,
+  "photos/dress.jpg": 88992,
+  "music/qixi_letter.m4a": 3905836, "music/bear.m4a": 3491143,
+  "music/perfume.m4a": 3206732, "music/pajama.m4a": 1915820,
+  "music/dress.m4a": 4032104
+};
+var OFFLINE_TOTAL_BYTES = Object.keys(OFFLINE_BYTES).reduce(function(a,k){ return a + OFFLINE_BYTES[k]; }, 0);
+/* 下载提示文案 */
+var DL_TIPS = {
+  "photos/bear.jpg": "正在把小熊装进盒子…",
+  "photos/bear_box.jpg": "正在系上小熊的礼带…",
+  "photos/perfume_1.jpg": "正在给香水盖上瓶盖…",
+  "photos/perfume_2.jpg": "正在读香水的香调…",
+  "photos/perfume_3.jpg": "正在把月光收进瓶里…",
+  "photos/pajama.jpg": "正在叠好噜噜睡衣…",
+  "photos/dress.jpg": "正在把裙子轻轻挂好…",
+  "music/qixi_letter.m4a": "正在藏好开场的情歌…",
+  "music/bear.m4a": "正在藏好小熊的歌…",
+  "music/perfume.m4a": "正在藏好香水的歌…",
+  "music/pajama.m4a": "正在藏好噜噜的歌…",
+  "music/dress.m4a": "正在藏好裙子的歌…"
+};
+
 /* ---------- 音乐表 ---------- */
 var TRACKS = {
   letter:  { id:"audLetter",  file:"music/qixi_letter.m4a" },
@@ -265,6 +303,24 @@ function spawnPetals(n, kind){
   }
 }
 
+/* ---------- 星点粒子 ---------- */
+function spark(x, y, color, n){
+  n = n || 6;
+  for(var i=0;i<n;i++){
+    var sp = document.createElement("span");
+    sp.className = "spark" + (color === "pink" ? " spark-pink" : (color === "gold" ? " spark-gold" : ""));
+    sp.style.left = x + "px";
+    sp.style.top = y + "px";
+    var ang = Math.random()*Math.PI*2;
+    var dist = 28 + Math.random()*46;
+    sp.style.setProperty("--sx", Math.cos(ang)*dist + "px");
+    sp.style.setProperty("--sy", Math.sin(ang)*dist + "px");
+    sp.style.animation = "sparkFly " + (0.5 + Math.random()*0.5) + "s ease-out forwards";
+    document.body.appendChild(sp);
+    setTimeout(function(){ sp.remove(); }, 1100);
+  }
+}
+
 /* ---------- 波纹涟漪 ---------- */
 function ripple(x, y){
   var layer = $("#rippleLayer");
@@ -274,6 +330,7 @@ function ripple(x, y){
   r.style.top = y + "px";
   layer.appendChild(r);
   setTimeout(function(){ r.remove(); }, 900);
+  spark(x, y, "gold", 4);
 }
 
 /* ---------- 开盒特效 ---------- */
@@ -294,6 +351,8 @@ function burst(x, y, colorA, colorB){
     setTimeout(function(){ s.remove(); }, 1000);
   }
   ripple(x, y);
+  spark(x, y, "gold", 10);
+  spark(x, y, "pink", 8);
 }
 
 /* ---------- 拆礼物 ---------- */
@@ -390,6 +449,82 @@ function initRipples(){
   });
 }
 
+/* ---------- 离线下载 ---------- */
+function formatMB(n){ return (n/1048576).toFixed(1) + " MB"; }
+
+function checkOfflineReady(){
+  try{
+    return caches.open(OFFLINE_CACHE).then(function(c){
+      return c.match(OFFLINE_REMOTE[OFFLINE_REMOTE.length-1]).then(function(r){ return !!r; });
+    });
+  }catch(e){ return Promise.resolve(false); }
+}
+
+function startDownload(){
+  var bar = document.getElementById("dlBar");
+  var pct = document.getElementById("dlPercent");
+  var tip = document.getElementById("dlTip");
+  var size = document.getElementById("dlSize");
+  var enter = document.getElementById("dlEnter");
+  var loaded = 0;
+  var list = OFFLINE_LOCAL.concat(OFFLINE_REMOTE);
+
+  function step(path){
+    loaded += OFFLINE_BYTES[path] || 0;
+    var p = Math.min(100, Math.round(loaded / OFFLINE_TOTAL_BYTES * 100));
+    if(bar) bar.style.width = p + "%";
+    if(pct) pct.textContent = p;
+    if(size) size.textContent = formatMB(loaded) + " / " + formatMB(OFFLINE_TOTAL_BYTES);
+    if(tip && DL_TIPS[path]) tip.textContent = DL_TIPS[path];
+  }
+
+  Promise.all(list.map(function(path, i){
+    var remote = OFFLINE_REMOTE.indexOf(path) !== -1;
+    var url = remote ? asset(path) : path;
+    return fetch(url, {mode: remote ? "cors" : "same-origin", cache:"no-store"})
+      .then(function(res){
+        if(res && res.status === 200){
+          return caches.open(OFFLINE_CACHE).then(function(c){ return c.put(url, res); });
+        }
+      })
+      .catch(function(){})
+      .then(function(){ step(path); });
+  })).then(function(){
+    try{ localStorage.setItem("qixi_ready_v3", "1"); }catch(e){}
+    if(enter) enter.hidden = false;
+    if(tip) tip.textContent = "全部礼物已悄悄收好，随时可以打开";
+    if(bar) bar.style.width = "100%";
+    if(pct) pct.textContent = "100";
+    if(enter){
+      enter.addEventListener("click", function(){ enterSite(); });
+    }
+    // 3 秒后自动进入
+    setTimeout(function(){ enterSite(); }, 3000);
+  });
+}
+
+function enterSite(){
+  var dl = document.getElementById("stage-download");
+  if(dl){ dl.classList.remove("active"); dl.classList.add("hide"); }
+  if(!window.__siteStarted){
+    window.__siteStarted = true;
+    init();
+  }
+}
+
+function initOffline(){
+  if("serviceWorker" in navigator){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  }
+  checkOfflineReady().then(function(ready){
+    if(ready){
+      enterSite();
+    } else {
+      startDownload();
+    }
+  });
+}
+
 /* ---------- 初始化 ---------- */
 function init(){
   var s0 = document.getElementById("stage-open");
@@ -457,9 +592,9 @@ function init(){
 }
 
 if(document.readyState === "loading"){
-  document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener("DOMContentLoaded", initOffline);
 } else {
-  init();
+  initOffline();
 }
 
 })();
