@@ -12,7 +12,7 @@ function asset(p){ return ASSETS_BASE + p; }
 
 /* ---------- 离线预加载资源清单 ---------- */
 var OFFLINE_CACHE = "qixi-gift-v3";
-var OFFLINE_LOCAL = ["css/style.css", "js/main.js", "patterns/baoxianghua.svg", "patterns/chanzhilian.svg", "patterns/rendong.svg", "patterns/haishuijiangya.svg", "patterns/tongxinjie.svg", "patterns/xiangnang.svg", "patterns/tuanshan.svg", "patterns/xiangyun.svg"];
+var OFFLINE_LOCAL = ["css/style.css", "js/main.js", "js/letter.js", "patterns/baoxianghua.svg", "patterns/chanzhilian.svg", "patterns/rendong.svg", "patterns/haishuijiangya.svg", "patterns/tongxinjie.svg", "patterns/xiangnang.svg", "patterns/tuanshan.svg", "patterns/xiangyun.svg"];
 var OFFLINE_REMOTE = [
   "photos/bear.jpg", "photos/bear_box.jpg",
   "photos/perfume_1.jpg", "photos/perfume_2.jpg", "photos/perfume_3.jpg",
@@ -22,7 +22,7 @@ var OFFLINE_REMOTE = [
 ];
 /* 各资源近似字节数（用于进度估算，避免读 blob 占内存） */
 var OFFLINE_BYTES = {
-  "css/style.css": 29000, "js/main.js": 16000, "patterns/baoxianghua.svg": 2040, "patterns/chanzhilian.svg": 1773, "patterns/rendong.svg": 999, "patterns/haishuijiangya.svg": 1390, "patterns/tongxinjie.svg": 1206, "patterns/xiangnang.svg": 691, "patterns/tuanshan.svg": 1077, "patterns/xiangyun.svg": 603,
+  "css/style.css": 29000, "js/main.js": 16000, "js/letter.js": 2500, "patterns/baoxianghua.svg": 2040, "patterns/chanzhilian.svg": 1773, "patterns/rendong.svg": 999, "patterns/haishuijiangya.svg": 1390, "patterns/tongxinjie.svg": 1206, "patterns/xiangnang.svg": 691, "patterns/tuanshan.svg": 1077, "patterns/xiangyun.svg": 603,
   "photos/bear.jpg": 172530, "photos/bear_box.jpg": 194221,
   "photos/perfume_1.jpg": 309277, "photos/perfume_2.jpg": 144991,
   "photos/perfume_3.jpg": 134879, "photos/pajama.jpg": 125881,
@@ -174,6 +174,20 @@ function onEnter(name){
   }
 }
 
+
+/* ---------- 渲染情书（读取 js/letter.js 里可编辑的内容） ---------- */
+function renderLetter(){
+  var body = document.getElementById("letterBody");
+  if(!body) return;
+  var paras = window.LETTER_PARAGRAPHS || [];
+  body.innerHTML = "";
+  paras.forEach(function(txt){
+    if(txt == null || txt === "") return;
+    var p = document.createElement("p");
+    p.textContent = String(txt);
+    body.appendChild(p);
+  });
+}
 
 /* ---------- 图片模糊渐显 ---------- */
 function initImgFade(){
@@ -559,6 +573,7 @@ function init(){
   initRipples();
   initImgFade();
   spawnFireflies();
+  renderLetter();
 
   $("#btnEnter").addEventListener("click", function(){ goTo("letter"); });
 
